@@ -1,0 +1,10 @@
+Adding existing code to the GIT repository
+
+1. git init
+2. git add .
+3. git commit -m "Your comment"
+4. git remote add origin remote-repository-URL
+5. git push origin master
+
+Update code changes into git repository and create a patch file
+

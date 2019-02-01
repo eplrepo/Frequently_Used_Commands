@@ -1,0 +1,96 @@
+1. Copy the images from System to Board using SCP
+Ex: scp sample.sh pi@169.254.111.66:/home/pi
+
+Known Issues:
+	Check the SSH service is installed & running or not on both sides (System & Board)
+	sudo systemctl restart ssh.service
+	sudo systemctl restart ssh
+
+2. Create a folder with the current date & time
+Ex: 	Input --> mkdir $(date '+%d-%m-%Y;%T') 
+	Output --> 26-11-2018;21:50:12
+
+3. sudo scp pi@169.254.37.133:/home/pi/sample.c epl@169.254.37.137:/home/epl
+
+sudo scp hello.c epl@169.254.37.137:/home/epl/Docker/home/epl/Images
+
+4. Cross compiler Path:
+/home/epl/Docker/home/epl/LTPbuildroot/output/host/bin/arm-buildroot-linux-uclibcgnueabihf-
+
+5. bcm2709-rpi-2-b.dtb
+
+sudo dd bs=4M if=sdcard.img of=/dev/sdb conv=fsync
+
+fatload mmc 0 ${kernel_addr_r} zImage
+fatload mmc 0 ${fdt_addr_r} bcm2709-rpi-2-b.dtb
+ext4load mmc 0:2 ${ramdisk_addr_r} var/backups/rootfs.ext4
+bootz ${kernel_addr_r} ${ramdisk_addr_r} ${fdt_addr_r}
+
+setenv bootargs console=ttyAMA0,115200 earlyprintk rootfstype=ext4 root=/dev/mmcblk0p2 rootwait panic=10
+
+LTPTestcase Binary path: /usr/lib32/ltp-testsuite/runtest/
+			 /usr/lib32/ltp-testsuite/testcases/bin
+			 /usr/lib/ltp-testsuite/testcases/bin
+
+configure Linux kernel: make linux-menuconfig
+
+mkimage -A powerpc -O linux -T kernel -C gzip -a 0 -e 0 -n Linux -d vmlinux.gz uImage
+
+
+Copy RFS to SD Card Partition 2:
+
+Making Partition 2 filesystem type as ext4: 
+	sudo mkfs.ext4 /dev/sdc2
+Mount Partition 2: 
+	sudo mount /dev/sdc2 mnt
+cd mnt/
+Extracting Rootfs to Partition 2: 
+	sudo cpio -idv < /home/epl/Umamahesh_Backup/Images/rootfs.cpio
+Copying new testcase to Partition 2: 
+	sudo cp ../sample_test .
+
+Enable Openssh in Buildroot:
+
+	Target Packages-->
+		Networking Applications-->
+			< * >Openssh
+Enable Openssl in Buildroot:
+
+	Target Packages-->
+		libraries-->
+			crypto-->
+				< * > openssl object
+
+Temperature sensor Chip name: TMP102
+
+How to know the ssh server is running in RPi2
+	Command: ps ax | grep sshd
+		Output: root     /usr/sbin/sshd
+
+
+ifconfig eth0 172.17.0.1
+ifconfig eth0 192.168.0.1
+ifconfig
+passwd root
+
+sshpass -p "epl@123" scp epl@192.168.0.2:/home/epl/LTIB/LTP_Source/home/epl/LTPbuildroot/output/images/Pi3/zImage /root/
+sshpass -p "epl@123" scp epl@192.168.0.2:/home/epl/LTIB/LTP_Source/home/epl/LTPbuildroot/output/images/Pi3/bcm2709-rpi-2-b.dtb /root/
+sshpass -p "epl@123" scp epl@192.168.0.2:/home/epl/LTIB/LTP_Source/home/epl/LTPbuildroot/output/images/Pi3/Copy_images_from_host.sh /root/
+sshpass -p "epl@123" scp epl@192.168.0.2:/home/epl/LTIB/LTP_Source/home/epl/LTPbuildroot/output/images/Pi3/run.sh /root/
+sshpass -p "epl@123" scp epl@192.168.0.2:/home/epl/LTIB/LTP_Source/home/epl/LTPbuildroot/output/images/Pi3/sample_test /root/
+sshpass -p "epl@123" scp epl@192.168.0.2:/home/epl/LTIB/LTP_Source/home/epl/LTPbuildroot/output/images/Pi3/rootfs.ext4 /root/
+#scp epl@192.168.0.2:/home/epl/LTIB/LTP_Source/home/epl/LTPbuildroot/output/images/Pi3/zImage /root/
+
+make ltp-testsuite-rebuild
+make o=output/build/
+
+
+
+
+
+
+
+
+
+
+

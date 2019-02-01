@@ -1,0 +1,52 @@
+mkdir mnt
+mount /dev/mmcblk0p4 mnt/
+cd mnt/
+value=`cat bootinfo.txt`
+echo $value
+if [ $value == 2 ]; then
+        sed -i 's/2/3/g' bootinfo.txt
+        echo "True"
+        cat bootinfo.txt
+	cd ..
+	umount mnt/
+
+	dd if=rootfs.ext4 of=/dev/mmcblk0p3 conv=fsync
+	mount /dev/mmcblk0p3 mnt/
+	cd mnt/root/
+	cp /root/run.sh .
+	cd /root/
+	umount mnt/ 
+
+	mount /dev/mmcblk0p1 mnt/
+	cd mnt/
+	sed -i 's/2/3/g' cmdline.txt
+	cat cmdline.txt
+	cd root/
+	cp /root/zImage .
+	cp /root/bcm2709-rpi-2-b.dtb .
+	cd ..
+	umount mnt/
+	rm -Rf *	
+
+else
+        sed -i 's/3/2/g' bootinfo.txt
+        echo "False"
+        cat bootinfo.txt
+	cd ..
+	umount mnt/
+
+	dd if=rootfs.ext4 of=/dev/mmcblk0p2 conv=fsync
+	mount /dev/mmcblk0p2 mnt/
+	cd mnt/root/
+	cp /root/run.sh .
+	cd /root/
+	umount mnt/ 
+
+	mount /dev/mmcblk0p1 mnt/
+	cd mnt/
+	sed -i 's/3/2/g' cmdline.txt 
+	cd ..
+	umount mnt/
+	rm -Rf *
+fi
+

@@ -1,0 +1,17 @@
+cd /usr/src/
+cd output/images
+cp zImage rootfs.ext4 bcm2709-rpi-2-b.dtb Pi3/
+#scp zImage rootfs.ext4 bcm2709-rpi-2-b.dtb root@192.168.0.1:/root/
+#ssh-keygen -t rsa -N "" -f ~/.ssh/id_rsa.pub
+#ssh-keygen -t rsa -N "" -f ~/.ssh/id_rsa
+#ls ~/.ssh/id_rsa.pub
+cat ~/.ssh/id_rsa.pub
+#apt-get install sshpass
+#ifconfig
+#ifconfig eth0 192.168.0.3
+ifconfig
+#ssh-keygen -f "/home/epl/.ssh/known_hosts" -R 192.168.0.1
+#sshpass -p "root" scp zImage rootfs.ext4 bcm2709-rpi-2-b.dtb root@172.17.0.1:/root/
+#apt-get install -y net-tools
+whoami
+scp zImage rootfs.ext4 bcm2709-rpi-2-b.dtb root@172.17.0.1:/root/

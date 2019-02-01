@@ -1,0 +1,25 @@
+docker images
+ae61ef68fa7f
+sudo docker import - <New Docker Image Name> < 286f30ec2cbc.gz
+sudo docker import - ae61ef68fa7f < 286f30ec2cbc.gz
+sudo docker run -i -t <Image ID> /bin/bash
+sudo docker run -i -t ae61ef68fa7f /bin/bash
+
+sudo docker start <Container ID>
+	sudo docker start 4fb6dc580e3b
+
+sudo docker attach <Container ID>
+	sudo docker attach 4fb6dc580e3b
+
+sudo docker commit <Container ID> <Repsitory Name> 
+	sudo docker commit 9b2425b4cbeb ae61ef68fa7f
+
+sudo docker cp <Container ID>:<Source PATH> <Destination PATH>
+Ex: sudo docker cp 45efa4a2701c:/home/epl-lab/LTP/RP2/LTPbuildroot/output/images/rootfs.cpio /home/epl/LTIB/
+
+
+sudo docker cp a54fbad28564:/home/epl-lab/LTP/RP2/LTPbuildroot/output/build/ltp-testsuite-20180118/testcases/sample_test/sample_test /home/epl/LTIB/Images/Latest/
+
+
+
+

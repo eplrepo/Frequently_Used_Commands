@@ -1,0 +1,63 @@
+SCP Command:
+
+sudo scp <filename> <remote_Username>@<remote_ip>:<remote_path>
+	sudo scp zImage root@192.168.0.1:/root/
+
+Remove known_hostl_list: ssh-keygen -f "/root/.ssh/known_hosts" -R <remote_ip>
+	ssh-keygen -f "/root/.ssh/known_hosts" -R 192.168.0.1
+
+Sftp Command:
+
+Connect: sftp -v <remote_Username>@<remote_ip>
+	sftp -v root@192.168.0.1
+
+Remove known_hostl_list: ssh-keygen -R <remote_ip>
+	ssh-keygen -R 192.168.0.1
+
+
+Note: Known issues
+
+1. Before performing above commands need to 
+
+Enable Openssh in Buildroot:
+
+	Target Packages-->
+		Networking Applications-->
+			< * >Openssh
+Enable Openssl in Buildroot:
+
+	Target Packages-->
+		libraries-->
+			crypto-->
+				< * > openssl object
+
+Enable Dropbear SSH package in LTPBuildroot
+
+2. Create password for root user in RPi2 board
+3. Assign IP Address to the RPi2 Board
+
+
+
+ssh-keygen -t rsa
+
+or 
+
+ssh-keygen -t rsa -N "" -f ~/.ssh/id_rsa.pub
+
+apt-get install sshpass
+
+sshpass -p "root" scp zImage rootfs.ext4 bcm2709-rpi-2-b.dtb root@192.168.0.1:/root/
+
+scp ~/.ssh/id_rsa.pub root@192.168.0.1:~/.ssh/authorized_keys
+
+https://alvinalexander.com/linux-unix/how-use-scp-without-password-backups-copy
+
+
+Need to know:
+
+1. SSH importance
+2. sshd daemon
+3. Sudoers
+4. SCP
+5. SFTP
+6. ssh-keygen

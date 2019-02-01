@@ -1,0 +1,20 @@
+echo 'https_proxy = http://10.144.172.172:3128/' >> ~/.wgetrc
+echo 'http_proxy = http://10.144.172.172:3128/' >> ~/.wgetrc
+echo 'ftp_proxy = http://10.144.172.172:3128/' >> ~/.wgetrc
+echo 'use_proxy = on' >> ~/.wgetrc
+cat ~/.wgetrc
+echo 'export https_proxy='http://10.144.172.172:3128/'' >> ~/.bashrc
+echo 'export http_proxy='http://10.144.172.172:3128/'' >> ~/.bashrc
+echo 'export ftp_proxy='http://10.144.172.172:3128/'' >> ~/.bashrc
+echo 'export GIT_PROXY_COMMAND="oe-git-proxy"' >> ~/.bashrc
+cat ~/.bashrc
+mkdir ~/bin
+cd ~/bin
+wget http://git.yoctoproject.org/cgit/cgit.cgi/poky/plain/scripts/oe-git-proxy
+chmod +x oe-git-proxy
+echo 'Acquire::http::Proxy "http://10.144.172.172:3128/";' >> /etc/apt/apt.conf
+cat /etc/apt/apt.conf
+
+https://github.com/purushotham447/LTPbuildroot
+
+Token - 4f6c00ddec023c17b9a3c7fdaedc8aa744f15a98 

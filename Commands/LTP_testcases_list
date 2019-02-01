@@ -1,0 +1,13 @@
+writetest -  verify integrity of disk writes.
+
+The purpose of this test is to verify that writes to
+ *                disk occur without corruption.  It writes one 1MB
+ *                buffer at a time, where each byte in the buffer is
+ *                generated from a random number.  Once done
+ *                completed, the file is re-opened, the random number
+ *                generator is re-seeded, and the file is verified.
+
+
+clock_gettime02 - 
+
+rtc01 - Reads the Date/time from RTC device '/dev/rtc'

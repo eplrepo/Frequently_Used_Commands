@@ -1,0 +1,50 @@
+ifconfig eth0 192.168.0.1
+ifconfig
+passwd root
+reboot
+
+mkfs.ext4 /dev/mmcblk0p2
+mke2fs -t ext4 -O ^has_journal /dev/mmcblk0p2
+dd if=rootfs.ext4 of=/dev/mmcblk0p2
+
+
+/* Read bootinfo.txt from P4 */
+mount /dev/mmcblk0p4 mnt/
+cd mnt/
+
+/* Read Value from bootinfo.txt */
+value='cat bootinfo.txt'
+if [ $value e 2  ]; then
+
+/* Update bootinfo.txt to 3 value to P4 */
+sed -i 's/2/3/g' bootinfo.txt
+cp bootinfo.txt .
+cd ..
+umount mnt/
+
+/* Dump Rootfs to P3 */
+cd /root/
+dd if=rootfs.ext4 of=/dev/mmcblk0p3 conv=fsync
+
+/* Update cmdline.txt text to mmcblk0p3 then copy to P1 */
+mkdir mnt
+mount /dev/mmcblk0p1 mnt/
+sed -i 's/mmcblk0p2/mmcblk0p3/g' cmdline.txt 
+cd mnt/
+cp cmdline.txt .
+cd ..
+umount mnt/
+
+/* Copy runscript.sh to P3 */
+mount /dev/mmcblk0p3 mnt/
+cd mnt/
+cp runscript.sh /root/
+cd ..
+umount mnt/        
+
+else
+        echo "The file 'somefile' does not exist."
+fi
+
+
+

@@ -1,0 +1,34 @@
+make distclean
+make clean
+cp linux_build_config .config
+cp -Rf /home/epl/dl .
+make
+#ls
+make ltp-testsuite-rebuild
+make o=output/build/
+mount output/images/rootfs.ext4 /mnt/
+cp ltp_scripts/autocopy.sh /mnt/root/
+cp ltp_scripts/run.sh /mnt/root/
+cp -Rf ltp_scripts/board_ssh /mnt/root/.ssh
+cp ltp_scripts/profile /mnt/etc/
+umount /mnt/
+cp output/images/bcm2709-rpi-2-b.dtb /usr/src/pi2
+cp output/images/zImage /usr/src/pi2
+cp output/images/rootfs.ext4 /usr/src/pi2
+
+
+
+Note:
+sudo docker run --privileged -u root -v /home/epl/LTIB/LTP_Source/home/epl/LTPbuildroot/:/usr/src -p 8080:8080 jenkins/jenkins
+wget https://github.com/git-lfs/git-lfs/releases/download/v2.6.1/git-lfs-linux-amd64-v2.6.1.tar.gz
+tar xvf git-lfs-linux-amd64-v2.6.1.tar.gz
+./install.sh
+git clone https://github.com/eplrepo/Linux-Test-Framework.git
+
+1. Git lfs needs to be installed because rootfs.ext4 acts as a ASCII text
+2. Execute from shell only to remove mount issue
+3. run ./build.sh script by enabling the below option
+Additional Behaviours	
+Local subdirectory for repo	: /var/jenkins_home/workspace/demoproject/
+
+4. Delete workspace when build is done

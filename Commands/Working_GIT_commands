@@ -1,0 +1,26 @@
+git init
+git lfs track
+git lfs track "*.zip"
+git lfs track "*.ext2"
+git lfs track "*.ext4"
+git lfs track "*.img"
+git lfs track "*.tar.gz"
+git lfs track "*.cpio"
+git lfs track "*.tar.xz"
+git lfs track "*.gch"
+git lfs track
+git status
+git add .gitattributes
+git add . --force
+git status
+git commit -m "Initial commit"
+git status
+git remote -v
+git push -u origin master
+
+git remote -v
+git remote add origin https://github.com/eplrepo/Linux-Test-Automation-Framework.git
+
+
+mv pkg_dep dl
+mv linux_build_config .config

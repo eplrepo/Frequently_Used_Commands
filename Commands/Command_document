@@ -1,0 +1,29 @@
+Command to mount LTPbuildroot using docker:
+
+docker run -u root -v /home/epl/Docker/home/epl/LTPbuildroot/:/usr/src -p 8080:8080 jenkins/jenkins:lts
+
+Shell script to run LTPbuildroot using Jenkins:
+
+apt-get update
+cd /usr/src/
+apt-get -y install gcc
+apt-get -y install file
+apt-get -y install g++
+apt-get -y install patch
+apt-get -y install cpio
+apt-get -y install rsync
+apt-get -y install bc
+apt-get -y install autotools-dev
+apt-get -y install automake
+apt-get -y install fakeroot
+apt-get -y install make
+apt-get -y install liblocale-msgfmt-perl
+make
+
+
+$ mkdir ~/bin
+$ cd ~/bin
+$ wget http://git.yoctoproject.org/cgit/cgit.cgi/poky/plain/scripts/oe-git-proxy
+$ chmod +x oe-git-proxy
+ 
+6. Make sure socat is installed by "sudo apt-get install socat"

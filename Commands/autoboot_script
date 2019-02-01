@@ -1,0 +1,43 @@
+/home/epl/LTIB/LTP_Source/home/epl/LTPbuildroot/output/images/Pi3/zImage /tmp/
+ifconfig eth0 192.168.0.1
+ifconfig
+scp epl@192.168.0.2:/home/epl/LTIB/LTP_Source/home/epl/LTPbuildroot/output/images/rootfs.ext4 /tmp/
+scp epl@192.168.0.2:/home/epl/LTIB/LTP_Source/home/epl/LTPbuildroot/output/images/bcm2709-rpi-2-b.dtb /tmp/
+scp epl@192.168.0.2:/home/epl/LTIB/LTP_Source/home/epl/LTPbuildroot/output/images/zImage /tmp/
+scp epl@192.168.0.2:/home/epl/LTIB/LTP_Source/home/epl/LTPbuildroot/output/images/Pi3/run.sh /root/
+
+echo "Configuring Board IP....."
+ifconfig eth0 192.168.0.1
+ifconfig
+echo "Copying files from Host PC to Rpi2 Board"
+echo "zImage"
+sshpass -p "epl@123" scp epl@192.168.0.2:/home/epl/LTIB/LTP_Source/home/epl/LTPbuildroot/output/images/latest/zImage /tmp/
+echo "bcm2709-rpi-2-b.dtb"
+sshpass -p "epl@123" scp epl@192.168.0.2:/home/epl/LTIB/LTP_Source/home/epl/LTPbuildroot/output/images/latest/bcm2709-rpi-2-b.dtb /tmp/
+echo "rootfs.ext4"
+sshpass -p "epl@123" scp epl@192.168.0.2:/home/epl/LTIB/LTP_Source/home/epl/LTPbuildroot/output/images/latest/rootfs.ext4 /tmp/
+
+file1 ="/tmp/zImage"
+file2 ="/tmp/bcm2709-rpi-2-b.dtb"
+file3 ="/tmp/rootfs.ext4"
+echo "Checking File existance condition"
+if [[! -f "file1"] && [! -f "file2"] && [! -f "file3"]]; then 
+	echo "All required files are not present\n"
+else
+	echo "All required files are present\n"
+	cd /root
+	./run.sh
+fi
+
+BR2_INIT_BUSYBOX=y
+
+Run a Script after login
+
+sudo nano /etc/profile
+
+. /home/pi/your_script_name.sh
+
+
+Auto login:
+
+console::respawn:/bin/login -f root

@@ -1,0 +1,23 @@
+#!/bin/sh
+SENSOR_DIR="/usr/lib/ltp-testsuite/testcases/bin"
+SCRIPT_DIR="/testThreshold"
+
+echo " LINUX TEST PROJECT (LTP) "
+./${SENSOR_DIR}/sensor_test /dev/i2c-1 "0x5A"
+
+echo " LINUX PERFORMANCE TEST "
+
+./${SCRIPT_DIR}/infinite_test_1 &
+./${SCRIPT_DIR}/infinite_test_2 &
+./${SCRIPT_DIR}/infinite_test_3 &
+./${SCRIPT_DIR}/infinite_test_4 &
+
+sh ${SCRIPT_DIR}/test_fail_pidstat.sh
+
+
+
+init.d/rcS--> exec /bin/login root
+
+make INSTALL_MOD_PATH=/home/epl/Jan_7/Linux-Test-Framework/output/build/linux-865ddc1393f558198e7e7ce70928ff2e49c4f7f6 DEPMOD=/home/epl/Jan_7/Linux-Test-Framework/output/host/sbin/depmod modules_install
+
+./sensor_test /dev/i2c-1 "0x5A"
